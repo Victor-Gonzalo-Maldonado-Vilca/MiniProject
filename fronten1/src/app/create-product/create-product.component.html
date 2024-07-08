@@ -1,0 +1,64 @@
+<div>
+  <h2>Crear Producto</h2>
+  <form (ngSubmit)="createProduct()">
+    <div>
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" [(ngModel)]="product.nameOfProduct" name="name" required>
+    </div>
+    <div>
+      <label for="price">Precio:</label>
+      <input type="number" id="price" [(ngModel)]="product.price" name="price" required>
+    </div>
+    <div>
+      <label for="dueDate">Fecha de Vencimiento:</label>
+      <input type="date" id="dueDate" [(ngModel)]="product.dueDate" name="dueDate" required>
+    </div>
+    <div>
+      <label for="kind">Tipo de Producto:</label>
+      <select id="kind" [(ngModel)]="product.kindOfProduct" name="kind" required>
+        <option *ngFor="let type of productTypes" [value]="type.value">{{ type.label }}</option>
+      </select>
+    </div>
+    <button type="submit">Crear Producto</button>
+  </form>
+</div>
+
+<div>
+  <h1>Lista de Productos</h1>
+  <ul>
+    <li *ngFor="let product of products">
+      {{ product.id }}- {{ product.nameOfProduct }} - {{ product.price }} - {{ product.dueDate | date }} - {{ product.kindOfProduct }}
+      <button class="btn btn-danger" (click)="deleteProduct(product.id)">
+        Eliminar
+      </button>
+      <button class="btn btn-primary" (click)="viewUpdate(product)">
+        Actualizar
+      </button>
+      <div *ngIf="product.showUpdateForm">
+        <h2>Actualizar Producto</h2>
+
+        <form (ngSubmit)="updateProduct(product)">
+          <div class="form-group">
+            <label for="name">Nombre del Producto</label>
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.nameOfProduct" required>
+          </div>
+          <div class="form-group">
+            <label for="price">Precio</label>
+            <input type="number" class="form-control" id="price" name="price" [(ngModel)]="product.price" required>
+          </div>
+          <div class="form-group">
+            <label for="dueDate">Fecha de Vencimiento</label>
+            <input type="date" class="form-control" id="dueDate" name="dueDate" [(ngModel)]="product.dueDate" required>
+          </div>
+          <div class="form-group">
+            <label for="kind">Tipo de Producto</label>
+            <select class="form-control" id="kind" name="kind" [(ngModel)]="product.kindOfProduct" required>
+              <option *ngFor="let type of productTypes" [value]="type.value">{{ type.label }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        </form>
+      </div>
+    </li>
+  </ul>
+</div>
